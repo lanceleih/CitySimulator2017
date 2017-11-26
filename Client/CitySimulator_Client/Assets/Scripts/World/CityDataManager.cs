@@ -10,13 +10,24 @@ using UnityEngine;
 /// Author:
 ///	 Name: Dongwon(Shawn) Kim    Date: 2017-09-11
 /// Modified by:	
-///	 Name: Dongwon(Shawn) Kim   Change:	Start to use		 Date: 2017-10-17
-///	 Name: Dongwon(Shawn) Kim   Change:	bug fix		 		 Date: 2017-10-18
-///  Name: Lancelei Herradura	Change: Adding walkable path Date: 2017-10-31
-///	 Name: Dongwon(Shawn) Kim   Change:	gridforTest	 		 Date: 2017-11-13
+///	 Name: Dongwon(Shawn) Kim   Change:	Start to use		 	Date: 2017-10-17
+///	 Name: Dongwon(Shawn) Kim   Change:	bug fix		 		 	Date: 2017-10-18
+///  Name: Lancelei Herradura	Change: Adding walkable path 	Date: 2017-10-31
+///	 Name: Dongwon(Shawn) Kim   Change:	gridforTest	 		 	Date: 2017-11-13
 /// Based on:  N/A
 /// </summary>
 public class CityDataManager : MonoBehaviour {
+
+	private Dictionary<int, GameObject> humans = new Dictionary<int, GameObject>();
+	public Dictionary<int, GameObject> Humans {
+		get {
+			return humans;
+		}
+
+		set {
+			humans = value;
+		}
+	}
 
 	// switch for testing
 	public bool turnOnTestGrid;
@@ -101,7 +112,7 @@ public class CityDataManager : MonoBehaviour {
 			path = value;
 		}
 	}
-	
+
 	/// <summary>
 	// Awake this instance.
 	/// </summary>
@@ -227,4 +238,7 @@ public class CityDataManager : MonoBehaviour {
 
 		return grid[x][z];
 	}
+
+
+
 }
