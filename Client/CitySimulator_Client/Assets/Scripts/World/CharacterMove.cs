@@ -65,8 +65,12 @@ public class CharacterMove : MonoBehaviour {
 	/// For now, retrieve information at Start.
 	/// </summary>
 	void Start() {
+
 		// Rotate, until we get the new humans
 		transform.rotation = Quaternion.AngleAxis(-90, Vector3.right);
+
+		// Until we get the new humans
+		// transform.rotation = Quaternion.AngleAxis(-90, Vector3.right);
 
 		bfs.OriginalPlane = findCurrentPlane();
 		bfs.Start ();
