@@ -21,29 +21,25 @@ public class CharacterCreation : MonoBehaviour {
 
 	// character object
 	public Transform character;
-
 	// list of the planes
 	private GameObject[] planes;
-
 	// The character manager.
 	private GameObject characterManager;
-
 
 	/// <summary>
 	/// Start this instance.
 	/// </summary>
 	void Start () {
-		population = 1;
+		population = 2;
 		characterManager = GameObject.Find ("CharacterManager");
-		
+
 	}
 	
 	/// <summary>
 	/// Update this instance.
 	/// </summary>
 	void Update () {
-		
-		createCharacter("test", 0,0, 24,13);
+		createCharacter("pop" + 1, 0,0, 15,3);
 
 	}
 
@@ -51,54 +47,37 @@ public class CharacterCreation : MonoBehaviour {
 	/// Creates the character.
 	/// </summary>
 	public void createCharacter(string guid, int src_x, int src_z, int dest_x, int dest_z){
-		IList<int> xz = new List<int> ();
-		planes = GameObject.FindGameObjectsWithTag("plane");
+		if (population > 0) {
+			// Delete character if it already exists
+			destroyCharacter (guid);
 
-		GameObject source = findPlane (src_x, src_z);
-		GameObject dest = findPlane (dest_x, dest_z);
+			planes = GameObject.FindGameObjectsWithTag("plane");
+			GameObject source = findPlane (src_x, src_z);
+			Transform human = 
+				Instantiate (character,
+					new Vector3 (source.transform.position.x, 0, source.transform.position.z),
+					Quaternion.identity,characterManager.transform) as Transform;
 
+			human.gameObject.AddComponent<CharacterMove> ();
+			human.GetComponent<CharacterMove> ().X_Dest = dest_x;
+			human.GetComponent<CharacterMove> ().Z_Dest = dest_z;
+			human.name = guid;
+			population--;
 
-		Transform human = 
-			Instantiate (character,
-				new Vector3 (source.transform.position.x, 0, source.transform.position.z),
-				Quaternion.identity,characterManager.transform) as Transform;
-		
-		human.gameObject.AddComponent<CharacterMove> ();
-		human.GetComponent<CharacterMove> ().X_Dest = (int)source.transform.position.x;
-		human.GetComponent<CharacterMove> ().Z_Dest = (int)source.transform.position.z;
-		human.name = guid;
-		
-		// testing
-//		IList<int> xz = new List<int>();
-//		planes = GameObject.FindGameObjectsWithTag("plane");
-//
-//		if (population > 0) {
-//			for (int i = population; i >= 1; i--) {
-//				GameObject source = setRandSource ();
-//
-//				Transform human = 
-//					Instantiate (character,
-//						new Vector3 (source.transform.position.x, 0, source.transform.position.z),
-//						Quaternion.identity,characterManager.transform) as Transform;
-//				
-//				human.gameObject.AddComponent<CharacterMove> ();
-//				xz = setRandDest ();
-//				human.GetComponent<CharacterMove> ().X_Dest = xz[1];
-//				human.GetComponent<CharacterMove> ().Z_Dest = xz[3];
-//				int x = human.GetComponent<CharacterMove> ().X_Dest;
-//				int z = human.GetComponent<CharacterMove> ().Z_Dest;
-////				Debug.Log("Population i: " + i + "\n" +  x + ", " + z);
-//				xz.Clear ();
-//			}
-//
-//			population = 0;
-//		}
+		}
+
+//		test();
 
 	}
 
-
+	/// <summary>
+	/// Destroys the character.
+	/// </summary>
+	/// <param name="guid">GUID.</param>
 	public void destroyCharacter(string guid) {
-		
+		GameObject oldChar = GameObject.Find(guid);
+		if(!Object.ReferenceEquals(oldChar, null))
+			Destroy (oldChar);
 	}
 
 	/// <summary>
@@ -120,10 +99,35 @@ public class CharacterCreation : MonoBehaviour {
 		return null;
 	}
 
-
-
-
-
+	/// <summary>
+	/// Test this instance.
+	/// </summary>
+	void test() {
+				IList<int> xz = new List<int>();
+				planes = GameObject.FindGameObjectsWithTag("plane");
+		
+				if (population > 0) {
+					for (int i = population; i >= 1; i--) {
+						GameObject source = setRandSource ();
+		
+						Transform human = 
+							Instantiate (character,
+								new Vector3 (source.transform.position.x, 0, source.transform.position.z),
+								Quaternion.identity,characterManager.transform) as Transform;
+						
+						human.gameObject.AddComponent<CharacterMove> ();
+						xz = setRandDest ();
+						human.GetComponent<CharacterMove> ().X_Dest = xz[1];
+						human.GetComponent<CharacterMove> ().Z_Dest = xz[3];
+						int x = human.GetComponent<CharacterMove> ().X_Dest;
+						int z = human.GetComponent<CharacterMove> ().Z_Dest;
+		//				Debug.Log("Population i: " + i + "\n" +  x + ", " + z);
+						xz.Clear ();
+					}
+		
+					population = 0;
+				}
+	}
 
 
 
