@@ -50,21 +50,6 @@ public class CharacterMove : MonoBehaviour {
 		}
 	}
 
-	// Human id
-	private int id;
-	/// <summary>
-	/// Gets or sets the I.
-	/// </summary>
-	/// <value>The I.</value>
-	public int ID {
-		get {
-			return id;
-		}
-		set {
-			id = value;
-		}
-	}
-
 	// Reference for the CityDataManager class
 	public CityDataManager cityDataManager;
 
@@ -92,7 +77,6 @@ public class CharacterMove : MonoBehaviour {
 	/// Move to the location back and forth.
 	/// </summary>
 	void Update() {
-
 		move ();
 	}
 
@@ -107,12 +91,10 @@ public class CharacterMove : MonoBehaviour {
 		//		changedLocation ();
 		if (bfs.Valid) {
 			bfs.Move ();
-
 			targetDir = bfs.CurrentPlane.transform.position - transform.position;
 			newDir = Vector3.RotateTowards (transform.forward, targetDir, step, 0.0F);
 			transform.position = Vector3.MoveTowards (transform.position, bfs.CurrentPlane.transform.position, step);
 			transform.rotation = Quaternion.LookRotation (newDir);
-
 			if (bfs.To) {
 
 				if (transform.position.Equals (bfs.CurrentPlane.transform.position) && bfs.PathIndex >= 0) {
@@ -122,14 +104,12 @@ public class CharacterMove : MonoBehaviour {
 					bfs.To = false;
 					bfs.PathIndex = 0;
 				}
+			
 			} else {
-				Destroy (this.gameObject);
+				Destroy(this.gameObject);
 			}
 
-		} else {
-			Destroy (this.gameObject);
 		}
-
 	}
 
 	/// <summary>

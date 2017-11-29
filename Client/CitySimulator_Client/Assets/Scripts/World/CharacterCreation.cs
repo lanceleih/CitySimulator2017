@@ -11,13 +11,14 @@ using UnityEngine;
 ///	 Name: Dongwon(Shawn) Kim   Date: 2017-10-02
 /// Modified by:	
 ///	 Name: Dongwon(Shawn) Kim   Change: initiate belongs to CharacterManager Date: 2017-10-31
+///  Name: Lancelei Herradura	Change: Humans move based on Character Move  Date: 2017-11-12
 ///  Name: Lancelei Herradura	Change: character - CharacterMove component  Date: 2017-11-13
 ///  Name: Lancelei Herradura	Change: set source and destination			 Date: 2017-11-25
-///  Name: Lancelei Herradura	Change: random destination and source		 Date: 2017-11-27 
+///  Name: Lancelei Herradura	Change: Random source and destination		 Date: 2017-11-25
 /// Based on:  BuildingCreation.cs
 public class CharacterCreation : MonoBehaviour {
 	// population of the city
-	int population;
+	private int population;
 
 	// character object
 	public Transform character;
@@ -30,7 +31,7 @@ public class CharacterCreation : MonoBehaviour {
 	/// Start this instance.
 	/// </summary>
 	void Start () {
-		population = 2;
+		population = 10;
 		characterManager = GameObject.Find ("CharacterManager");
 
 	}
@@ -152,6 +153,7 @@ public class CharacterCreation : MonoBehaviour {
 
 	}
 
+
 	/// <summary>
 	/// Used for Testing
 	/// Sets the rand destination.
@@ -188,5 +190,6 @@ public class CharacterCreation : MonoBehaviour {
 		return xz;
 
 	}
+
 
 }
